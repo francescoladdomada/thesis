@@ -1,0 +1,38 @@
+# =============== #
+# Unity generated #
+# =============== #
+Amaze/[Tt]emp/
+Amaze/[Oo]bj/
+Amaze/[Bb]uild
+Amaze/[Ll]ibrary/
+Amaze/sysinfo.txt
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+Amaze/[Ee]xported[Oo]bj/
+Amaze/*.userprefs
+Amaze/*.csproj
+Amaze/*.pidb
+Amaze/*.suo
+Amaze/*.sln*
+Amaze/*.user
+Amaze/*.unityproj
+Amaze/*.booproj
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+Amaze/.DS_Store*
+Amaze/._*
+Amaze/.Spotlight-V100
+Amaze/.Trashes
+Amaze/Icon?
+Amaze/ehthumbs.db
+Amaze/[Tt]humbs.db
+
+# ============ #
+# Project generated #
+# ============ #
+Amaze/ProjectSettings/ProjectSettings.asset
