@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 
     private GazePointDataComponent _gazePointDataComponent;
     private UserPresenceComponent _userPresenceComponent;
-
+	private FixationDataComponent _fixationDataComponent;
 
     private string operatingSystem;
 
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour {
 		if (operatingSystem == "WIN") {
 			_gazePointDataComponent = GetComponent<GazePointDataComponent>();
 			_userPresenceComponent = GetComponent<UserPresenceComponent>();
+			_fixationDataComponent = GetComponent<FixationDataComponent> ();
 		}
 
 
@@ -109,6 +110,7 @@ public class PlayerController : MonoBehaviour {
 			mousePosition = Camera.main.ScreenToWorldPoint (mousePosition);
             return mousePosition;
         } else {
+			
             EyeXGazePoint p = _gazePointDataComponent.LastGazePoint;
             if (p.IsValid)
             {
@@ -117,6 +119,16 @@ public class PlayerController : MonoBehaviour {
                 mousePosition.z = 0;
                 return mousePosition;
             }
+
+			/*
+			EyeXFixationPoint c = _fixationDataComponent.LastFixation;
+			if (c.IsValid) {
+				Vector3 p = _fixationDataComponent.LastFixation.GazePoint.Screen;
+				Vector3 p1 = Camera.main.ScreenToWorldPoint (p);
+				p1.z = 0;
+				return p1;
+			}*/
+
 		}
 
 		return transform.position;
