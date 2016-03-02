@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 
     private GazePointDataComponent _gazePointDataComponent;
     private UserPresenceComponent _userPresenceComponent;
-	private FixationDataComponent _fixationDataComponent;
+	//private FixationDataComponent _fixationDataComponent;
 
     private string operatingSystem;
 
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour {
 		if (operatingSystem == "WIN") {
 			_gazePointDataComponent = GetComponent<GazePointDataComponent>();
 			_userPresenceComponent = GetComponent<UserPresenceComponent>();
-			_fixationDataComponent = GetComponent<FixationDataComponent> ();
+		//	_fixationDataComponent = GetComponent<FixationDataComponent> ();
 		}
 
 
