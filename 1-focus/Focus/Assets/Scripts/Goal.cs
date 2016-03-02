@@ -14,6 +14,8 @@ public class Goal : MonoBehaviour {
 
 	private int counter=1;
 
+	public bool isTutorial = false;
+
 	// Use this for initialization
 	void Start () {
 		eyeClose = gameObject.transform.FindChild ("GoalClose").gameObject;
@@ -51,6 +53,10 @@ public class Goal : MonoBehaviour {
 		transform.parent.gameObject.SendMessage ("DeactivateDistractions");
 		// tell the player to wait (close the eyes)
 		GameObject.Find ("Player").SendMessage ("WaitForNextLevel");
+
+		if (isTutorial)
+			GameObject.Find ("Relax-Image").GetComponent<SpriteRenderer> ().enabled = true;
+
 		// change the index of the level, but still don't show it
 		LoadNewLevel ();
 	}

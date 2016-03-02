@@ -5,7 +5,7 @@ public class GameController : MonoBehaviour {
 
 	int startLevel = 1;
 	int currentLevel = 1;
-	int finalLevel = 7;
+	int finalLevel = 9;
 
 	// Use this for initialization
 	void Start () {

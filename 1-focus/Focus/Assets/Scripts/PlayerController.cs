@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerController : MonoBehaviour {
 
 	private float speed = 1f;
@@ -27,8 +28,17 @@ public class PlayerController : MonoBehaviour {
 
     private string operatingSystem;
 
+	public Sprite spriteBig;
+
+	private string filename;
+
+	private int deathCounter = 0;
+	private int levelDeathCounter = 0;
+
 	// Use this for initialization
 	void Start () {
+		filename = "test-"+System.DateTime.Now.ToString("yy-MM-dd hh.mm.ss");
+
 		sRenderer = GetComponent<SpriteRenderer> ();
 
 		sounds = GetComponents<AudioSource> ();
@@ -46,10 +56,13 @@ public class PlayerController : MonoBehaviour {
 		}
 
 
-
         currentLevel = gameController.GetCurrentLevel();
-
+		UpdateFile (currentLevel+"", "0");
     }
+
+	void UpdateFile(string levelNumber, string numberOfDeaths) {
+		System.IO.File.AppendAllText(@"Tests/"+filename+" Level-"+levelNumber+" Deaths-"+numberOfDeaths+".txt", "."); 
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -91,7 +104,7 @@ public class PlayerController : MonoBehaviour {
 		if (EyesAreClosed() && isWaitingForNextLevel) {
 			isWaitingForNextLevel = false;
 			gameController.SendMessage ("ShowNewLevel");
-			RespawnFromStartPosition ();
+			RespawnFromStartPosition2 ();
 		}
 	}
 
@@ -140,6 +153,8 @@ public class PlayerController : MonoBehaviour {
 		PlayDieSound ();
 		PlayParticle ();
 		isDying = true;
+		deathCounter++;
+		levelDeathCounter++;
 		Invoke ("RespawnFromStartPosition", 0.9f);
 	}
 
@@ -150,12 +165,37 @@ public class PlayerController : MonoBehaviour {
 
 	void RespawnFromStartPosition() {
 		StopMoving ();
+
 		PlayRespawnSound ();
+
 
         currentLevel = gameController.GetCurrentLevel();
 
         transform.position = gameController.GetCurrentLevelStartPosition();
 		transform.localScale = new Vector3 (1, 1, 1);
+
+		if (currentLevel == 9) {
+			GetComponent<SpriteRenderer> ().sprite = spriteBig;
+		}
+		sRenderer.enabled = true;
+		isDying = false;
+
+	}
+
+	void RespawnFromStartPosition2() {
+		StopMoving ();
+
+
+		PlayNewLevelSound ();
+
+		currentLevel = gameController.GetCurrentLevel();
+
+		transform.position = gameController.GetCurrentLevelStartPosition();
+		transform.localScale = new Vector3 (1, 1, 1);
+
+		if (currentLevel == 9) {
+			GetComponent<SpriteRenderer> ().sprite = spriteBig;
+		}
 		sRenderer.enabled = true;
 		isDying = false;
 
@@ -178,13 +218,23 @@ public class PlayerController : MonoBehaviour {
 		sounds [1].Play ();
 	}
 
+	void PlayNewLevelSound() {
+		sounds [2].Play ();
+	}
+
 	void ResetStartPosition(int levelIndex) {
 		transform.position = gameController.GetCurrentLevelStartPosition ();
 		isWaitingForNextLevel = false;
+
+
+
+
 	}
 
 	void WaitForNextLevel() {
 		isWaitingForNextLevel = true;
+		UpdateFile (currentLevel+"", levelDeathCounter+"");
+		levelDeathCounter = 0;
 	}
 
 

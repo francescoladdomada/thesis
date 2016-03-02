@@ -22,6 +22,8 @@ public class Level : MonoBehaviour {
 		ActivateChild ("Goal");
 		ActivateChild ("Walls");
 		ActivateChild ("Distractions");
+
+		GameObject.Find ("Relax-Image").GetComponent<SpriteRenderer> ().enabled = false;
 	}
 
 	public void Deactivate() {
