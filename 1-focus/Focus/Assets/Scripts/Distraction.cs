@@ -26,6 +26,9 @@ public class Distraction : MonoBehaviour {
 
 		if(sr!=null)
 			sr.enabled = false;
+
+		if(ps!=null)
+			ps.enableEmission = false;
 		
 		if(anim!=null)
 			anim.Stop ();
@@ -37,12 +40,16 @@ public class Distraction : MonoBehaviour {
 			if(anim!=null)
 				anim.Play ();
 
+
 			if (ps != null) {
+				ps.enableEmission = true;
+
 				if(!ps.isPlaying)
 					ps.Play ();
-				if(!audio.isPlaying)
-					PlayAudio ();
 			}
+
+			if(audio!=null && !audio.isPlaying)
+				PlayAudio ();
 			
 			sr.enabled = true;
 			//isAnimationCalled = true;
@@ -51,7 +58,16 @@ public class Distraction : MonoBehaviour {
         {
 			if(anim!=null)
 	            anim.Stop();
-			
+
+			if (ps != null) {
+				ps.Stop ();
+				ps.enableEmission = false;
+
+			}
+
+			if (audio != null)
+				audio.Stop ();
+
             sr.enabled = false;
         }
 	}

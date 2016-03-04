@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		filename = "test-"+System.DateTime.Now.ToString("yy-MM-dd hh.mm.ss");
+		filename = "test-"+System.DateTime.Now.ToString("yyyy-MM-dd HH.MM.ss");
 
 		sRenderer = GetComponent<SpriteRenderer> ();
 
@@ -92,12 +92,12 @@ public class PlayerController : MonoBehaviour {
 
 	void Move() {
 		Vector3 cursorPosition = GetCursorPosition ();
-        gaze.transform.position = Vector2.Lerp(transform.position, cursorPosition, speed*150*Time.deltaTime);
-        transform.position = Vector2.Lerp(transform.position, gaze.transform.position, speed*Time.deltaTime);
+        //gaze.transform.position = Vector2.Lerp(transform.position, cursorPosition, speed*150*Time.deltaTime);
+        //transform.position = Vector2.Lerp(transform.position, gaze.transform.position, speed*Time.deltaTime);
 
-        //float step = speed * Time.deltaTime;
-        //gaze.transform.position = Vector3.MoveTowards(gaze.transform.position, cursorPosition, 50*step);
-        //transform.position = Vector3.MoveTowards(transform.position, cursorPosition, 2*step);
+        float step = speed * Time.deltaTime;
+        gaze.transform.position = Vector3.MoveTowards(gaze.transform.position, cursorPosition, 75*step);
+        transform.position = Vector3.MoveTowards(transform.position, cursorPosition, 2*step);
     }
 
 	void CloseTheEyes() {
@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour {
 		if (operatingSystem == "MAC") {
 			mousePosition = Input.mousePosition;
 			mousePosition = Camera.main.ScreenToWorldPoint (mousePosition);
+			mousePosition.z = 0f;
             return mousePosition;
         } else {
 			
