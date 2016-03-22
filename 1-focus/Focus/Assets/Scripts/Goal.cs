@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Goal : MonoBehaviour {
 
-	private float timeMax = 1f;
+	private float timeMax = 0.55f;
 	private float currentTime = 0f;
 
 	private bool isInside = false;
@@ -70,7 +70,7 @@ public class Goal : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D coll) {
 		if (coll.tag == "Player") {
 			isInside = false;
-			currentTime = 0f;
+			//currentTime = 0f;
 			isWon = false;
 		}
 	}

@@ -91,13 +91,29 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Move() {
-		Vector3 cursorPosition = GetCursorPosition ();
-        //gaze.transform.position = Vector2.Lerp(transform.position, cursorPosition, speed*150*Time.deltaTime);
-        //transform.position = Vector2.Lerp(transform.position, gaze.transform.position, speed*Time.deltaTime);
 
-        float step = speed * Time.deltaTime;
-        gaze.transform.position = Vector3.MoveTowards(gaze.transform.position, cursorPosition, 75*step);
-        transform.position = Vector3.MoveTowards(transform.position, cursorPosition, 2*step);
+		Vector3 cursorPosition = GetCursorPosition ();
+
+	//	float distance = Vector3.Distance (cursorPosition, gaze.transform.position);
+		float step = speed * Time.deltaTime;
+
+		/*
+		if (distance > 0.01f) {
+			
+			step = speed * Time.deltaTime;
+
+		} else {
+			step = speed/10f * Time.deltaTime;
+
+		}
+		*/
+		// constant movement
+		gaze.transform.position = Vector3.MoveTowards(gaze.transform.position, cursorPosition, 90*step);
+		transform.position = Vector3.MoveTowards(transform.position, cursorPosition, 2*step);
+
+		// slerp speed
+		//gaze.transform.position = Vector2.Lerp(transform.position, cursorPosition, speed*150*Time.deltaTime);
+		//transform.position = Vector2.Lerp(transform.position, gaze.transform.position, speed*Time.deltaTime);
     }
 
 	void CloseTheEyes() {

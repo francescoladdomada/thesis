@@ -15,6 +15,9 @@ public class Distraction : MonoBehaviour {
 
 	private ParticleSystem ps;
 
+	public bool mustPlayOnce = false;
+	private bool playedOnce = false;
+
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
@@ -32,6 +35,7 @@ public class Distraction : MonoBehaviour {
 		
 		if(anim!=null)
 			anim.Stop ();
+
 	}
 	
 	// Update is called once per frame
@@ -48,8 +52,18 @@ public class Distraction : MonoBehaviour {
 					ps.Play ();
 			}
 
-			if(audio!=null && !audio.isPlaying)
-				PlayAudio ();
+			if (audio != null && !audio.isPlaying) {
+				if (mustPlayOnce) {
+					if (!playedOnce) {
+						PlayAudio ();
+						playedOnce = true;
+					}
+				} else {
+					PlayAudio ();
+				}
+
+
+			}
 			
 			sr.enabled = true;
 			//isAnimationCalled = true;
@@ -69,6 +83,8 @@ public class Distraction : MonoBehaviour {
 				audio.Stop ();
 
             sr.enabled = false;
+
+			playedOnce = false;
         }
 	}
 
