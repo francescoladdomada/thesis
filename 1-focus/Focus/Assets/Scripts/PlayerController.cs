@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour {
 	private int deathCounter = 0;
 	private int levelDeathCounter = 0;
 
+	private Vector3[] tempCoordinates;
+	private int maxTempNumber = 60;
+	private int tempIndex = 0;
+
 	// Use this for initialization
 	void Start () {
 		filename = "test-"+System.DateTime.Now.ToString("yyyy-MM-dd HH.MM.ss");
@@ -55,6 +59,10 @@ public class PlayerController : MonoBehaviour {
 		//	_fixationDataComponent = GetComponent<FixationDataComponent> ();
 		}
 
+		tempCoordinates = new Vector3[maxTempNumber];
+		for (int i = 0; i < maxTempNumber; i++) {
+			tempCoordinates [i] = Vector3.zero;
+		}
 
         currentLevel = gameController.GetCurrentLevel();
 		UpdateFile (currentLevel+"", "0");
@@ -66,6 +74,13 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (tempIndex == maxTempNumber)
+			tempIndex = 0;
+
+		tempCoordinates [tempIndex] = GetCursorPosition();
+		tempIndex++;
+
 		// die animation
 		if (isDying) {
 			Vector3 size = transform.localScale;
@@ -108,7 +123,11 @@ public class PlayerController : MonoBehaviour {
 		}
 		*/
 		// constant movement
-		gaze.transform.position = Vector3.MoveTowards(gaze.transform.position, cursorPosition, 90*step);
+		//gaze.transform.position = Vector3.MoveTowards(gaze.transform.position, cursorPosition, 90*step);
+
+		//if (tempIndex == maxTempNumber - 1)
+			cursorPosition = GetArrayAverage ();
+
 		transform.position = Vector3.MoveTowards(transform.position, cursorPosition, 2*step);
 
 		// slerp speed
@@ -242,10 +261,34 @@ public class PlayerController : MonoBehaviour {
 	void ResetStartPosition(int levelIndex) {
 		transform.position = gameController.GetCurrentLevelStartPosition ();
 		isWaitingForNextLevel = false;
+	}
 
+	Vector3 GetArrayAverage() {
+		Vector3 result;
+		float total_x = SumValues ("x");
+		float total_y = SumValues ("y");
 
+		result.x = CalculateAverage (total_x);
+		result.y = CalculateAverage (total_y);
+		result.z = 0;
 
+		return result;
+	}
 
+	float SumValues(string x_or_y) {
+		float result = 0;
+		for (int i = 0; i < tempCoordinates.Length; i++) {
+			if (x_or_y == "x")
+				result += tempCoordinates [i].x;
+			else
+				result += tempCoordinates [i].y;
+		}
+		return result;
+	}
+
+	float CalculateAverage(float sum) {
+		float result = sum / tempCoordinates.Length;
+		return result;
 	}
 
 	void WaitForNextLevel() {
