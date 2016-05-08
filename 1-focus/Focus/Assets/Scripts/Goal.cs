@@ -35,6 +35,9 @@ public class Goal : MonoBehaviour {
 			CloseTheEyeAnimation();
 		}
 
+		if (Input.GetKeyDown ("space")) {
+			Win ();
+		}
 	}
 
 	void CloseTheEyeAnimation() {

@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		filename = "test-"+System.DateTime.Now.ToString("yyyy-MM-dd HH.MM.ss");
+		filename = "test-"+System.DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
 
 		sRenderer = GetComponent<SpriteRenderer> ();
 
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour {
 		if(operatingSystem=="MAC")
 			return Input.GetMouseButtonDown(0);
 		else
-			return !_userPresenceComponent.IsUserPresent;
+			return (!_userPresenceComponent.IsUserPresent || Input.GetKeyDown("space"));
 	}
 
 	Vector3 GetCursorPosition() {

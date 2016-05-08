@@ -18,10 +18,15 @@ public class Distraction : MonoBehaviour {
 	public bool mustPlayOnce = false;
 	private bool playedOnce = false;
 
+	//public bool mustMove = false;
+	//public float moveDirectionX;
+	//public float moveDirectionY;
+
+	private Vector3 startPosition;
+
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
-
 
 		audio = GetComponent<AudioSource> ();
 		anim = GetComponent<Animation> ();
@@ -36,11 +41,21 @@ public class Distraction : MonoBehaviour {
 		if(anim!=null)
 			anim.Stop ();
 
+		startPosition = transform.localPosition;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (isActivated && !isAnimationCalled) {
+		if (isActivated/* && !isAnimationCalled*/) {
+			/*
+			if (mustMove) {
+				Vector3 newPos = transform.localPosition;
+				newPos.x = newPos.x + moveDirectionX * Time.deltaTime;
+				newPos.y = newPos.y + moveDirectionY * Time.deltaTime;
+				transform.localPosition = newPos;
+				print (newPos);
+			}*/
+
 			if(anim!=null)
 				anim.Play ();
 
@@ -70,6 +85,7 @@ public class Distraction : MonoBehaviour {
 		}
         else
         {
+			//transform.localPosition = startPosition;
 			if(anim!=null)
 	            anim.Stop();
 
